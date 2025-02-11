@@ -31,28 +31,33 @@ public class VagaDAO
             envioDadosSql.execute();
             envioDadosSql.close();
             
-            JOptionPane.showMessageDialog(null, "Vaga de nº " + vagaDTO.getIdVaga() + " adicionada ao sistema");
+            String mensagem = "Vaga de nº " + vagaDTO.getIdVaga() + " adicionada ao sistema";
+                    
+            JOptionPane.showMessageDialog(null, mensagem);
         } 
         catch (Exception e) 
         {
-            
+            JOptionPane.showMessageDialog(null, "Erro no metodo SituacaoVaga(): " + e);
         }
     }
     
     public void alterarStatusDaVaga(VagaDTO vagaDTO)
     {
-        String sql = "UPDATE Vaga SET situacaoVaga = ? WHERE idVaga = ?";
+        String sql = "UPDATE Vaga SET situacaoVaga = ?, Veiculo_Placa = ? WHERE idVaga = ?";
         abrirConexao = new Conexao().conectaBD();
         
         try 
         {
             envioDadosSql = abrirConexao.prepareStatement(sql);
             envioDadosSql.setString(1, vagaDTO.getSitucao());
-            envioDadosSql.setInt(2, vagaDTO.getIdVaga());
+            envioDadosSql.setString(2, vagaDTO.getFKveiculo());
+            envioDadosSql.setInt(3, vagaDTO.getIdVaga());
             envioDadosSql.executeUpdate();
             envioDadosSql.close();
             
-            JOptionPane.showMessageDialog(null, "Alteração da vaga realizada com sucesso!");
+            String mensagem = "Alteração na vaga de nº " + vagaDTO.getIdVaga() + " realizada com sucesso";
+            
+            JOptionPane.showMessageDialog(null, mensagem);
         } 
         catch (Exception erro) 
         {
